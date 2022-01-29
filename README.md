@@ -1,7 +1,9 @@
 ![Fishboard banner](https://github.com/Proxymal/Fishboard/blob/main/other/LOGO_BANNER.png)
 
 # About
-**Fishboard** is framework to make your JavaScript code more structured, object-oriented and easy-to-maintain. Framework has these features:
+**Fishboard** is framework to make your JavaScript code more structured, object-oriented and easy-to-maintain. 
+
+### Core features
 - [Interface](#interface)
 - [Module](#module)
 - [ModuleTests](#moduletests)
@@ -14,6 +16,11 @@
 - [Validators](#validators)
 - [IConverter](#iconverter)
 
+### Additional features
+- [Object features](#object-features)
+- [Array features](#array-features)
+- [String features](#string-features)
+
 
 
 # Installation
@@ -21,10 +28,11 @@ You can install framework via node package manager:
 ```
 npm i fishboard -d
 ```
+**NOTICE**: framework is uses alot of modern JavaScript, you should use *Webpack + Babel* when you use **Fishboard** in your project.
 
 
 
-# Features
+# Core features
 **Fishboard** has a bunch of features that it's implements in the JavaScript.
 
 ### Interface
@@ -169,3 +177,37 @@ class DomToStringConverter extends IConverter {
 const someDomNode = document.getElementById('someNode') // Some node in HTML that have text 'Hello world'
 console.log(new DomToStringConverter().convert(someDomNode)) // Hello world
 ```
+
+
+
+# Additional features
+**Fishboard** also offers additional features as extensions of existing JavaScript things. All of the additional features
+will be added to JavaScript when you will import something from `fishboard` or just write:
+```js
+import 'fishboard'
+```
+
+### Object features
+*Object.getAllProperties* - returns all of the object properties, including ones from prototypes.
+```js
+class A { get x() { return 1 } }
+class B extends A {}
+class C extends B {}
+
+console.log(Object.getAllProperties(new C())) // [ 'x' ]
+```
+
+*Object.setMeta* and *Object.getMeta* allows you to set or get value of hidden property **meta** in object.
+```js
+let myObject = {}
+let myMeta = { x: 100 }
+
+Object.setMeta(myObject, myMeta)
+console.log(Object.getMeta(myObject)) // { x: 100 }
+```
+
+### Array features
+In progress
+
+### String features
+In progress
