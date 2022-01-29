@@ -17,7 +17,8 @@
 - [IConverter](#iconverter)
 
 ### Additional features
-- [Object features](#object-features)
+- [Object reflection](#object-reflection)
+- [Object metadata](#object-metadata)
 - [Array features](#array-features)
 - [String features](#string-features)
 - [Functions with history](#functions-with-history)
@@ -196,7 +197,7 @@ class A { get x() { return 1 } }
 class B extends A {}
 class C extends B {}
 
-console.log(Object.getAllProperties(new C())) // [ 'x' ]
+console.log(Object.GetAllProperties(new C())) // [ 'x' ]
 ```
 
 ### Object metadata
@@ -256,3 +257,4 @@ When you run function with state, it has access to `this.state` variable, which 
 - `.SetValue(name, value)` (Sets value in state)
 - `.GetValue(name)` (Gets value in state)
 - `.GetValues()` (Returns all values in state as object
+- `[State.$Data]` (Field with all data of state)
