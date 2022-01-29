@@ -24,8 +24,8 @@ npm i fishboard -d
 
 
 
-# Concepts
-**Fishboard** has a bunch of concepts that it's implements in the JavaScript.
+# Features
+**Fishboard** has a bunch of features that it's implements in the JavaScript.
 
 ### Interface
 Every object-oriented programming language has *Interfaces* feature, *Interface* is abstract class with properties and methods,
