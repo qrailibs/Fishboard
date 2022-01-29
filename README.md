@@ -110,7 +110,7 @@ const userMike = {
 console.log(UserModel.IsValid(userJohn)) // true
 console.log(UserModel.IsValid(userMike)) // false (biography was not string)
 ```
-Also you can generate random model objects:
+Also you can generate random model instances(objects):
 ```js
 import { Model, Types } from 'fishboard'
 
@@ -143,4 +143,29 @@ In progress
 In progress
 
 ### IConverter
-In progress
+**IConverter** - is *interface* that allows you to implement types converters.
+
+When you implement *IConverter* you should implement:
+- property `[IConverter.Input` (Should return instance of IType)
+- property `[IConverter.Output]` (Should return instance of IType)
+- method `[IConverter.Convert] (input)` (Should return value of type `output`)
+
+Example of creating DOM node to string converter:
+```js
+import { IConverter, Types } from 'fishboard'
+
+class DomToStringConverter extends IConverter {
+    get [IConverter.Input]() {
+        return Types.DOMNode
+    }
+    get [IConverter.Output]() {
+        return Types.String
+    }
+    [IConverter.Convert] (input) {
+        return input.innerText
+    }
+}
+
+const someDomNode = document.getElementById('someNode') // Some node in HTML that have text 'Hello world'
+console.log(new DomToStringConverter().convert(someDomNode)) // Hello world
+```
