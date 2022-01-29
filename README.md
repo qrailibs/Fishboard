@@ -20,6 +20,8 @@
 - [Object features](#object-features)
 - [Array features](#array-features)
 - [String features](#string-features)
+- [Functions with history](#functions-with-history)
+- [Functions with state](#functions-with-state)
 
 
 
@@ -45,7 +47,7 @@ import { Interface } from 'fishboard'
 // Interface
 class ICar extends Interface {
     // 'price' property should be implemented in classes of ICar
-    get price() { return Interface.Required }
+    get price() { return Interface.$Required }
 }
 
 // Class that implements interface
@@ -163,13 +165,13 @@ Example of creating DOM node to string converter:
 import { IConverter, Types } from 'fishboard'
 
 class DomToStringConverter extends IConverter {
-    get [IConverter.Input]() {
-        return Types.DOMNode
+    get [IConverter.$Input]() {
+        return Types.DOMElement
     }
-    get [IConverter.Output]() {
+    get [IConverter.$Output]() {
         return Types.String
     }
-    [IConverter.Convert] (input) {
+    [IConverter.$Convert] (input) {
         return input.innerText
     }
 }
@@ -187,8 +189,8 @@ will be added to JavaScript when you will import something from `fishboard` or j
 import 'fishboard'
 ```
 
-### Object features
-*Object.getAllProperties* - returns all of the object properties, including ones from prototypes.
+### Object reflection
+`Object.GetAllProperties` - returns all of the object properties, including ones from prototypes.
 ```js
 class A { get x() { return 1 } }
 class B extends A {}
@@ -197,13 +199,19 @@ class C extends B {}
 console.log(Object.getAllProperties(new C())) // [ 'x' ]
 ```
 
-*Object.setMeta* and *Object.getMeta* allows you to set or get value of hidden property **meta** in object.
+### Object metadata
+**Fishboard** also allows you to use hidden property **meta** in object, that can be used to store any metadata of object.
+Available methods is:
+- `Object.GetMeta()`
+- `Object.SetMeta(value)`
+- `Object.IsHasMeta()`
 ```js
 let myObject = {}
 let myMeta = { x: 100 }
 
-Object.setMeta(myObject, myMeta)
-console.log(Object.getMeta(myObject)) // { x: 100 }
+console.log(Object.IsHasMeta(myObject)) // false
+Object.SetMeta(myObject, myMeta)
+console.log(Object.GetMeta(myObject)) // { x: 100 }
 ```
 
 ### Array features
@@ -211,3 +219,40 @@ In progress
 
 ### String features
 In progress
+
+### Functions with history
+You can easily store history of function results by running function with `.RunWithHistory(...args)`. Example: 
+```js
+function plus(a, b) {
+    return a + b
+}
+
+console.log(plus.RunWithHistory(1, 1)) // 2
+console.log(plus.RunWithHistory(2, 2)) // 4
+
+console.log(plus.GetHistory())
+// [
+//      { time: '12:00:00.00', arguments: [1, 1], result: 2 }
+//      { time: '12:00:00.01', arguments: [2, 2], result: 4 }
+// ]
+```
+
+### Functions with state
+You can also call function and store state by running function with `.RunWithState(...args)`. Example: 
+```js
+function someFunc() {
+    // If defined 'i' in state, do a++ (Or set 0 to 'i')
+    this.state.SetValue('i', this.state.GetValue('i') + 1 || 0)
+}
+
+someFunc.RunWithState() // i is 0
+someFunc.RunWithState() // i is 1
+someFunc.RunWithState() // i is 2
+
+console.log(someFunc.GetState().GetValues()) // { i: 2 }
+```
+When you run function with state, it has access to `this.state` variable, which is instance of `State` class.
+`State` class has these properties and methods:
+- `.SetValue(name, value)` (Sets value in state)
+- `.GetValue(name)` (Gets value in state)
+- `.GetValues()` (Returns all values in state as object
