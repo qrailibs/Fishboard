@@ -42,13 +42,13 @@ class ICar extends Interface {
 
 // Class that implements interface
 class Audi extends ICar {
-    get price() { return 1000 }
+    get price() { return 1_000_000 }
 }
 class BMW extends ICar {} // Error -> property 'price' not implemented
 ```
 
 ### Module
-Modules - is independent collection of functions that can be auto-tested. 
+**Modules** - is independent collection of functions that can be auto-tested. 
 Example of creating module:
 ```js
 import { Module } from 'fishboard'
@@ -63,7 +63,7 @@ console.log(math.minus(20, 10)) // 10
 ```
 
 ### ModuleTests
-Modules is also can be tested. 
+*Modules* is also can be tested with **ModuleTests**. 
 Example of creating tests for module:
 ```js
 import { Module, ModuleTests } from 'fishboard'
@@ -86,7 +86,43 @@ console.log(testResults.IsSuccess) // true
 ```
 
 ### Model
-In progress
+**Models** - is things that describes some object structure. *Models* also allows to validate if object has described structure.
+Example of creating model and validating:
+```js
+import { Model, Types } from 'fishboard'
+
+const UserModel = new Model({
+    id: Types.Number,
+    nickname: Types.String,
+    biography: Types.String
+})
+
+const userJohn = {
+    id: 1,
+    nickname: 'john_2008',
+    biography: 'typical gamer'
+}
+const userMike = {
+    id: 2,
+    nickname: 'mikegamer100',
+    biography: 1
+}
+console.log(UserModel.IsValid(userJohn)) // true
+console.log(UserModel.IsValid(userMike)) // false (biography was not string)
+```
+Also you can generate random model objects:
+```js
+import { Model, Types } from 'fishboard'
+
+const UserModel = new Model({
+    id: Types.Number,
+    nickname: Types.String,
+    biography: Types.String
+})
+
+const randomUser = UserModel.RandomInstance()
+console.log(randomUser) // { id: 31874, nickname: 'qL9Nx*^ajD(', biography: 'KD1_d$jd(ac0+' }
+```
 
 ### Controller
 In progress
