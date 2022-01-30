@@ -24,7 +24,25 @@
 - [Functions with history](#functions-with-history)
 - [Functions with state](#functions-with-state)
 
-
+### Progress
+- [x] Interface
+- [ ] Module
+- [ ] ModuleTests
+- [ ] Model
+- [ ] Controller
+- [ ] Extender
+- [x] IType
+- [ ] Types
+- [ ] IValidator
+- [ ] Validators
+- [ ] IConverter
+- [ ] Converters
+- [x] Object reflection
+- [x] Object metadata
+- [ ] Array features
+- [x] String features
+- [x] Functions with history
+- [x] Functions with state
 
 # Installation
 You can install framework via node package manager:
@@ -219,7 +237,14 @@ console.log(Object.GetMeta(myObject)) // { x: 100 }
 In progress
 
 ### String features
-In progress
+To get things in strings you can use `.GetBefore`, `.GetAfter`, `.getBetween` functions. Example:
+```js
+const myStr = 'forest,desert.jungle'
+
+console.log(myStr.GetBefore(',')) // forest
+console.log(myStr.GetAfter('.')) // jungle
+console.log(myStr.GetBetween(',', '.')) // desert
+```
 
 ### Functions with history
 You can easily store history of function results by running function with `.RunWithHistory(...args)`. Example: 
