@@ -1,4 +1,5 @@
 import IType from './IType'
+import Static from './Static'
 
 // Classes
 class NumberType extends IType {
@@ -29,7 +30,7 @@ class DOMElementType extends IType {
 
 
 // Statics
-export default class Types {
+export default class Types extends Static {
     // Instances...
     static get Number() { return new NumberType() }
     static get BigNumber() { return new BigNumberType() }

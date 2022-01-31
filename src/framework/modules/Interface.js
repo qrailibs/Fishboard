@@ -14,7 +14,7 @@ export default class Interface {
 
         // Check if instantiating interface
         if(Object.getPrototypeOf(Object.getPrototypeOf(this)).constructor.name === 'Interface') {
-            throw new Error(`Interfaces cannot be instantiated (${meta.className})`)
+            throw new Error(`Interfaces cannot be instantiated (class ${meta.className})`)
         }
         else {
             for(const prop of Object.GetAllProperties(this).values()) {
