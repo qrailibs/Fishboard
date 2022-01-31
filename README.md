@@ -232,7 +232,7 @@ class DomToStringConverter extends IConverter {
 }
 
 const someDomNode = document.getElementById('someNode') // Some node in HTML that have text 'Hello world'
-console.log(new DomToStringConverter().convert(someDomNode)) // Hello world
+console.log(new DomToStringConverter().Convert(someDomNode)) // Hello world
 ```
 
 ### Converters
