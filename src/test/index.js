@@ -1,7 +1,5 @@
 import { IType, Types } from '../fishboard'
 
-new Types()
-
 // (password length should be min: 6, max: 12)
 class PasswordType extends Types.TypeString {
     [IType.$IsValue](value) {

@@ -1,5 +1,6 @@
 # Testings
-src/test
+/src/test/index.html
+/src/test/index.js
 
 # Logs
 logs
