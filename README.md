@@ -12,8 +12,6 @@
 - [Extender](#extender)
 - [IType](#itype)
 - [Types](#types)
-- [IValidator](#ivalidator)
-- [Validators](#validators)
 - [IConverter](#iconverter)
 
 ### Additional features
@@ -32,9 +30,7 @@
 - [ ] Controller
 - [ ] Extender
 - [x] IType
-- [ ] Types
-- [ ] IValidator
-- [ ] Validators
+- [x] Types
 - [ ] IConverter
 - [ ] Converters
 - [x] Object reflection
@@ -139,6 +135,7 @@ const userMike = {
 console.log(UserModel.IsValid(userJohn)) // true
 console.log(UserModel.IsValid(userMike)) // false (biography was not string)
 ```
+
 Also you can generate random model instances(objects):
 ```js
 import { Model, Types } from 'fishboard'
@@ -160,39 +157,62 @@ In progress
 In progress
 
 ### IType
-In progress
+**IType** - is interface that used for basic types. You can create own type
+to validate its value. Example:
+
+When you inherit `IType` you should implement:
+- method `[IType.$IsValue](value)` (Should return true or false)
+
+Example of creating primitive `char` type:
+```js
+import { IType } from 'fishboard'
+
+class CharType extends IType {
+    [IType.$IsValue](value) {
+        return typeof value == 'string' && value.length == 1
+    }
+}
+
+const char = new CharType()
+console.log(char.IsValue('a')) // true
+console.log(char.IsValue('bb')) // false
+```
+
+Example of creating `password` type (inherits `String` type):
+```js
+import { IType, Types } from 'fishboard'
+
+// (password length should be min: 6, max: 12)
+class PasswordType extends Types.TypeString {
+    [IType.$IsValue](value) {
+        return super[IType.$IsValue](value) && value.length >= 6 && value.length <= 12
+    }
+}
+
+const password = new PasswordType()
+console.log(password.IsValue('abc')) // false
+console.log(password.IsValue('123abcdf')) // true
+```
 
 ### Types
-In progress
-
-### IValidator
-In progress
-
-### Validators
 In progress
 
 ### IConverter
 **IConverter** - is *interface* that allows you to implement types converters.
 
-When you implement *IConverter* you should implement:
-- property `[IConverter.Input` (Should return instance of IType)
-- property `[IConverter.Output]` (Should return instance of IType)
-- method `[IConverter.Convert] (input)` (Should return value of type `output`)
+When you inherit `IConverter` you should implement:
+- property `[IConverter.$Input]` (Should return instance of `IType`)
+- property `[IConverter.$Output]` (Should return instance of `IType`)
+- method `[IConverter.$Convert](input)` (Should return value of type `output`)
 
 Example of creating DOM node to string converter:
 ```js
 import { IConverter, Types } from 'fishboard'
 
 class DomToStringConverter extends IConverter {
-    get [IConverter.$Input]() {
-        return Types.DOMElement
-    }
-    get [IConverter.$Output]() {
-        return Types.String
-    }
-    [IConverter.$Convert] (input) {
-        return input.innerText
-    }
+    get [IConverter.$Input]() { return Types.DOMElement }
+    get [IConverter.$Output]() { return Types.String }
+    [IConverter.$Convert] (input) { return input.innerText }
 }
 
 const someDomNode = document.getElementById('someNode') // Some node in HTML that have text 'Hello world'
