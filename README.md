@@ -107,7 +107,7 @@ const mathTests = new ModuleTests({
   minus: (test, run) => {
     test.IsEquals(run(2, 1), 1) // 2 - 1 = 1?
   }
-})
+}, module)
 
 const testResults = mathTests.Test()
 console.log(testResults.IsSuccess) // true
