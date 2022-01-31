@@ -1,10 +1,12 @@
-import { Interface } from '../framework/fishboard'
+import { IType, Types } from '../framework/fishboard'
 
-class ICar extends Interface {
-    get price() { return Interface.Required }
+// (password length should be min: 6, max: 12)
+class PasswordType extends Types.TypeString {
+    [IType.$IsValue](value) {
+        return super[IType.$IsValue](value) && value.length >= 6 && value.length <= 12
+    }
 }
-class BMW extends ICar {
 
-}
-
-new BMW()
+const password = new PasswordType()
+console.log(password.IsValue('abc')) // false
+console.log(password.IsValue('123abcdf')) // true
