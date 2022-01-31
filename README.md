@@ -10,9 +10,11 @@
 - [Model](#model)
 - [Controller](#controller)
 - [Extender](#extender)
+- [Static](#static)
 - [IType](#itype)
 - [Types](#types)
 - [IConverter](#iconverter)
+- [Converters](#converters)
 
 ### Additional features
 - [Object reflection](#object-reflection)
@@ -29,6 +31,7 @@
 - [ ] Model
 - [ ] Controller
 - [ ] Extender
+- [x] Static
 - [x] IType
 - [x] Types
 - [ ] IConverter
@@ -156,6 +159,19 @@ In progress
 ### Extender
 In progress
 
+### Static
+**Static** - is a base class that allows you to make fully-static classes. Example:
+```js
+import { Static } from 'fishboard'
+
+class Props extends Static {
+    static get Version() { return '1.0.0' }
+}
+
+console.log(Props.Version) // 1.0.0
+new Props() // Error -> Static classes cannot be instantiated
+```
+
 ### IType
 **IType** - is interface that used for basic types. You can create own type
 to validate its value. Example:
@@ -219,6 +235,8 @@ const someDomNode = document.getElementById('someNode') // Some node in HTML tha
 console.log(new DomToStringConverter().convert(someDomNode)) // Hello world
 ```
 
+### Converters
+In progress
 
 
 # Additional features
