@@ -1,4 +1,4 @@
-import { IType, Types } from '../framework/fishboard'
+import { IType, Types } from '../fishboard'
 
 new Types()
 
