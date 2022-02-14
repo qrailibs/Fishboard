@@ -9,7 +9,7 @@
 - [ModuleTests](#moduletests)
 - [Model](#model)
 - [Controller](#controller)
-- [Extender](#extender)
+- [Implementer](#implementer)
 - [Static](#static)
 - [IType](#itype)
 - [Types](#types)
@@ -30,7 +30,7 @@
 - [ ] ModuleTests
 - [ ] Model
 - [ ] Controller
-- [ ] Extender
+- [ ] Implementer
 - [x] Static
 - [x] IType
 - [x] Types
@@ -156,8 +156,27 @@ console.log(randomUser) // { id: 31874, nickname: 'qL9Nx*^ajD(', biography: 'KD1
 ### Controller
 In progress
 
-### Extender
-In progress
+### Implementer
+Implementer is special feature, allows to implement methods on models
+```js
+import { Model, Implementer } from 'fishboard'
+
+const UserModel = new Model({
+    id: Types.Number,
+    nickname: Types.String,
+    biography: Types.String
+})
+
+const User = new Implementer(
+    UserModel, {
+    create: (nickname, bio) => {
+        // create user in database...
+    }
+})
+
+User.create('john2000', 'im gamer')
+
+```
 
 ### Static
 **Static** - is a base class that allows you to make fully-static classes. Example:
