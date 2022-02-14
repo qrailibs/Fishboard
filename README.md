@@ -144,9 +144,9 @@ Also you can generate random model instances(objects):
 import { Model, Types } from 'fishboard'
 
 const UserModel = new Model({
-    id: Types.Number,
-    nickname: Types.String,
-    biography: Types.String
+    id: { Types.Number, Model.$CanBeAuto },
+    nickname: { Types.String, Model.$Required },
+    biography: { Types.String, Model.$Required }
 })
 
 const randomUser = UserModel.RandomInstance()
@@ -162,15 +162,24 @@ Implementer is special feature, allows to implement methods on models
 import { Model, Implementer } from 'fishboard'
 
 const UserModel = new Model({
-    id: Types.Number,
-    nickname: Types.String,
-    biography: Types.String
+    id: { Types.Number, Model.$CanBeAuto },
+    nickname: { Types.String, Model.$Required },
+    biography: { Types.String, Model.$Required }
 })
 
 const User = new Implementer(
     UserModel, {
-    create: (nickname, bio) => {
-        // create user in database...
+    create: function (nickname, bio) {
+        // create user instance
+        const user = this.model.Instantiate({
+            id: model.$Auto,
+            nickname: nickname,
+            biography: bio
+        })
+        // validate data
+        if(this.model.IsValidInst(user)) {
+            // create user in database
+        }
     }
 })
 
