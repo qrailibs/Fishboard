@@ -239,7 +239,16 @@ console.log(password.IsValue('123abcdf')) // true
 ```
 
 ### Types
-In progress
+**Types** - is collection of primitive types implementation over *IType* interface.
+
+Types includes these primitives:
+- `NumberType` (*Number* primitive)
+- `BigNumberType` (*BigInt* primitive)
+- `BooleanType` (*Boolean* primitive)
+- `FunctionType` (*Function* primitive)
+- `ObjectType` (*Object* primitive)
+- `SymbolType` (*Symbol* primitive)
+- `DOMElementType` (*DOMNode* primitive)
 
 ### IConverter
 **IConverter** - is *interface* that allows you to implement types converters.
