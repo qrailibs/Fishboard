@@ -257,18 +257,18 @@ Types includes these primitives:
 **IConverter** - is *interface* that allows you to implement types converters.
 
 When you inherit `IConverter` you should implement:
-- property `[IConverter.$Input]` (Should return instance of `IType`)
-- property `[IConverter.$Output]` (Should return instance of `IType`)
-- method `[IConverter.$Convert](input)` (Should return value of type `output`)
+- property `Input` (Should return instance of `IType`)
+- property `Output` (Should return instance of `IType`)
+- method `Convert(input)` (Should return value of type `output`)
 
 Example of creating DOM node to string converter:
 ```js
 import { IConverter, Types } from 'fishboard'
 
 class DomToStringConverter extends IConverter {
-    get [IConverter.$Input]() { return Types.DOMElement }
-    get [IConverter.$Output]() { return Types.String }
-    [IConverter.$Convert] (input) { return input.innerText }
+    get Input() { return Types.DOMElement }
+    get Output() { return Types.String }
+    Convert(input) { return input.innerText }
 }
 
 const someDomNode = document.getElementById('someNode') // Some node in HTML that have text 'Hello world'
