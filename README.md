@@ -15,6 +15,7 @@
 - [Types](#types)
 - [IConverter](#iconverter)
 - [Converters](#converters)
+- [Encapsulated](#encapsulated)
 
 ### Additional features
 - [Object reflection](#object-reflection)
@@ -42,6 +43,7 @@
 - [x] String features
 - [x] Functions with history
 - [x] Functions with state
+- [x] Encapsulated
 
 # Installation
 You can install framework via node package manager:
@@ -197,7 +199,7 @@ class Props extends Static {
 }
 
 console.log(Props.Version) // 1.0.0
-new Props() // Error -> Static classes cannot be instantiated
+new Props() // Error: Static classes cannot be instantiated
 ```
 
 ### IType
@@ -211,31 +213,32 @@ Example of creating primitive `char` type:
 ```js
 import { IType } from 'fishboard'
 
+// Char: string with length of 1
 class CharType extends IType {
-    [IType.$IsValue](value) {
+    IsValue(value) {
         return typeof value == 'string' && value.length == 1
     }
 }
 
-const char = new CharType()
-console.log(char.IsValue('a')) // true
-console.log(char.IsValue('bb')) // false
+const Char = new CharType()
+console.log(Char.IsValue('a')) // true
+console.log(Char.IsValue('bb')) // false
 ```
 
 Example of creating `password` type (inherits `String` type):
 ```js
-import { IType, Types } from 'fishboard'
+import { Types } from 'fishboard'
 
 // (password length should be min: 6, max: 12)
-class PasswordType extends Types.TypeString {
-    [IType.$IsValue](value) {
-        return super[IType.$IsValue](value) && value.length >= 6 && value.length <= 12
+class PasswordType extends (Types.String.constructor) {
+    IsValue(value) {
+        return super.IsValue(value) && value.length >= 6 && value.length <= 12
     }
 }
 
-const password = new PasswordType()
-console.log(password.IsValue('abc')) // false
-console.log(password.IsValue('123abcdf')) // true
+const Password = new PasswordType()
+console.log(Password.IsValue('abcdfg')) // true
+console.log(Password.IsValue('abc')) // false
 ```
 
 ### Types
@@ -358,3 +361,14 @@ When you run function with state, it has access to `this.state` variable, which 
 - `.GetValue(name)` (Gets value in state)
 - `.GetValues()` (Returns all values in state as object
 - `[State.$Data]` (Field with all data of state)
+
+### Encapsulated
+```js
+import { Encapsulated, Types } from 'fishboard'
+
+const x = new Encapsulated(Types.Number, 100)
+console.log(x.Value) // 100
+x.Value = '200' // Error: Cannot assign value '200' to Encapsulated of type 'Number'
+x.Value = 300
+console.log(x.Value) // 300
+```
