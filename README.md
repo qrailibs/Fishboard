@@ -66,15 +66,16 @@ import { Interface } from 'fishboard'
 
 // Interface
 class ICar extends Interface {
-    // 'price' property should be implemented in classes of ICar
-    get price() { return Interface.$Required }
+    get [Interface.$Required] () {
+        return [ 'price' ] 
+    } 
 }
 
 // Class that implements interface
 class Audi extends ICar {
     get price() { return 1_000_000 }
 }
-class BMW extends ICar {} // Error -> property 'price' not implemented
+class BMW extends ICar {} // Error -> 'price' not implemented
 ```
 
 ### Module
